@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LITRevu</title>
+    <!-- <link rel="stylesheet" href="css/style.css" /> -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
+    />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script
+      src="https://kit.fontawesome.com/14273d579a.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+    <body>
+      <header>
+        <nav class="navbar navbar-expand-md navbar-light fixed-top"  style="background-color: beige;">
+          <div class="container">
+          <a class="navbar-brand text-uppercase fw-bold" href="{% url 'login' %}"><span class="bg-secondary bg-gradient p-1 rounded-3 text-light">LIT</span> Review</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expended="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon">
+      
+          </span>
+          </button>
+          <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+           <ul class="navbar-nav">
+            <li class="nav-item active">
+              <a class="nav-link" href="#LITRevu">Qui Sommes-nous ?</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#flux">Votre flux</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#Suivre">Suivre</a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+            </li>
+            <li class="nav-item">
+              
+                {% if user.is_authenticated %}
+                <p>Vous êtes connecté en tant que {{ request.user}}. 
+                  <form action="{% url 'logout'%}" method="post">
+                    {% csrf_token %}
+                     <button type="submit" class="btn-secondary">Se Déconnecter</button>
+                  </form>
+                </p>
+                {% endif %}
+            </li>
+           </ul>
+          </div>
+          </div>
+         </nav>
+       </header>  
+       <section class="my-5">
+        <div class="container py-5">
+          <div class="row gy-4 align-items-center">
+        {% block content %}{% endblock content %}
+          </div>
+      </div>
+       </section> 
+    </body>
+    <footer style="background-color: beige;">
+        <div class="container py-5" >
+            <div class="row gy-4 align-items-center">
+              <div class="col-12 col-md-4">
+                <a class="navbar-brand text-dark text-uppercase fw-bold" href="#">
+                  <span class="bg-secondary bg-gradient p-1 rounded-3 text-light">LIT</span> Review
+                </a>
+              </div>
+              <div class="col-12 col-md-4 text-md-center">
+                <ul class="list-unstyled mb-0">
+                  <li>
+                    <a href="#" class="btn mt-5 text-decoration-none text-dark"
+                    data-bs-toggle="modal" data-bs-target="#Mentionslegales">Mentions légales</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-12 col-md-4 text-md-end">
+                <ul class="list-inline mb-0">
+                  <li class="list-inline-item">
+                    <a href="" class="text-decoration-none text-dark" data-bs-toggle="tooltip" title="Linkedin"><i class="bi bi-linkedin"></i></a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="" class="text-decoration-none text-dark" data-bs-toggle="tooltip" title="Instagram"><i class="bi bi-instagram"></i></a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="https://twitter.com/home" class="text-decoration-none text-dark" data-bs-toggle="tooltip" title="Twitter"><i class="bi bi-twitter"></i></a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        <!-- Script js -->
+      <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    <!-- Modal -->
+<div class="modal fade" id="Mentionslegales" tabindex="-1" aria-labelledby="MentionslegalesLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="MentionslegalesLabel">Mentions Légales</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio obcaecati, voluptate eos quo eaque, omnis quae quaerat exercitationem eligendi, ad architecto. Distinctio earum rerum facere nemo deleniti dicta perspiciatis obcaecati.</p>
+          </div>
+      </div>
+  </div>
+</div>
+    </footer>
+</html>

@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+# from revu.models import Ticket, Review
+# # Register your models here.
+
+# admin.site.register(Ticket, Review)
