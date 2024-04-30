@@ -1,17 +1,25 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="container ">
+<div class="container border border-dark p-5">
 <div class="row align-items-center gy-4 gy-md-0">
     <div class="col-6 align-items-center">
-        <a href="{% url 'signup' %}" class="btn btn-secondary">S'incrire</a>
+        <h2 class="text-center">Inscrivez vous maintenant</h2>
+        <div class="text-center">
+        <a href="{% url 'signup' %}" class="btn btn-secondary">S'incrire</a></div>
         </div>
     <div class="col-6 align-items-center">
-    <form method="post">
-        {{ form.as_p }}
-        {% csrf_token %}
-
-        <button type="submit" class="btn-secondary">Se connecter</button>
-    </form>
+        <div class="text-center">
+        <h2 >Connectez-vous</h2>
+        <div class="form-group">
+            <form method="post">
+                {{ form.as_p }}
+                {% csrf_token %}
+                <div class="container">
+                <button type="submit" class="btn btn-secondary justify-content">Se connecter</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 </div>
 </div>

@@ -1,15 +1,31 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="container my-5">
+<div class="container px-2 my-5">
     <div class="row align-items-center">
-        <h2>Créer une Critique</h2>
-            <form method="post">
-                {{form.as_p}}
-                {% csrf_token %}
-                <div class="align-items-center">
-                <button type="submit" class="btn-secondary">Envoyer</button> 
-            </div>
-            </form>            
+        <div class="text-center">
+        <h2 class="fw-bold ">Créer une critique</h2></div>
+            <div class="border border-dark pb-4" style="background-color: rgb(227, 237, 248);">
+                <p class="m-3">Livre / Article : </p>
+            <div class="container m-2">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                        <label for="{{ form.rating.id_for_label }}">{{ form.rating.label}}</label>
+                        <div class="form-check form-check-inline">
+                            {% for radio in form.rating %}
+                                <label class="form-check-label">
+                                    {{ radio}}
+                                </label>
+                            {% endfor %}
+                        </div>
+                        {{ review_form.as_p }}
+                        </div>
+                        <div class="py-4">
+                        <button type="submit" class="btn btn-secondary col-12 h-100">Poster</button></div>
+                    </form> 
+                </div>
+            </div> 
+        </div>          
     </div>
 </div>
 {% endblock content %}

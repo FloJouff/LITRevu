@@ -41,7 +41,8 @@ urlpatterns = [
     path('home/', revu.views.home, name='home'),
     path('signup/', authentication.views.signup_page, name='signup'),
     path('revu/create_review', revu.views.review_upload, name='create_review'),
-    path('contact', revu.views.contact, name='contact')
+    path('contact', revu.views.contact, name='contact'),
+    path('revu/<int:review_id>', revu.views.view_review, name='view_review'),
 ]
 
 if settings.DEBUG:

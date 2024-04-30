@@ -1,17 +1,23 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="container my-5">
-<div class="row align-items-center">
-    <h2>Inscrivez vous</h2>
-{% if form.errors%}
-    {{ form.errors}}
-{% endif %}
-<form method="post">
-    {{form.as_p}}
-    {% csrf_token %}
-    <button type="submit" class="btn-secondary">S'incrire</button> <a href="{% url 'login' %}" class="btn btn-primary">Retourner</a>
-</form>
-    
-</div>
+<div class="container my-5 border border-dark p-5">
+    <div class="row align-items-center">
+        <div class="text-center">
+            <h2>Inscrivez vous</h2>
+            {% if form.errors%}
+                {{ form.errors}}
+            {% endif %}
+            <div class="form-group">
+            <form method="post">
+                {{form.as_p}}
+                {% csrf_token %}
+                <div class="container">
+                    <div class="offset-2">
+                        <button type="submit" class="btn btn-secondary">S'incrire</button> <a href="{% url 'login' %}" class="btn btn-secondary offset-2">Retourner</a>
+                    </div>
+                </div>
+            </form></div>
+        </div>    
+    </div>
 </div>
 {% endblock content %}

@@ -6,10 +6,21 @@ from django.contrib.auth import get_user_model
 class SignupForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = get_user_model()
-        fields = ('username', 'email', 'role')
+        fields = ('username', 'role', 'password')
+
+        widgets = {
+            'username': forms.TextInput(attrs={'class': 'form-control'}),
+            'role': forms.Select(attrs={'class': 'form-control'}),
+            'password': forms.PasswordInput(attrs={'class': 'form-control'}),
+        }
 
 
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=63, label='Nom d\'utilisateur')
     password = forms.CharField(max_length=63, widget=forms.PasswordInput,
                                label='Mot de passe')
+
+    widgets = {
+            'username': forms.TextInput(attrs={'class': 'form-control'}),
+            'password': forms.PasswordInput(attrs={'class': 'form-control'}),
+        }
