@@ -1,12 +1,20 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="container px-2 my-5">
+<div class="container px-2 my-3">
     <div class="row align-items-center">
         <div class="text-center">
         <h2 class="fw-bold ">Créer une critique</h2></div>
             <div class="border border-dark pb-4" style="background-color: rgb(227, 237, 248);">
-                <p class="m-3">Livre / Article : </p>
+                <h3 class="m-3 text-decoration-underline">Livre / Article : </h3>
+                <h4 class="m-3">Titre</h4>
+                <div class="border border-dark col-12"><p><br></p></div>
+                <h4 class="m-3">Description</h4>
+                <div class="border border-dark row-6 col-12"><p><br></p></div>
+                <h4 class="m-3">Image</h4>
+                <button class="btn btn-secondary">Télécharger Fichier</button>
+            <hr>
             <div class="container m-2">
+                <h3 class="m-3 text-decoration-underline">Critique</h3>
                     <form method="post">
                         {% csrf_token %}
                         <div class="form-group">

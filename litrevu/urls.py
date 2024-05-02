@@ -43,6 +43,9 @@ urlpatterns = [
     path('revu/create_review', revu.views.review_upload, name='create_review'),
     path('contact', revu.views.contact, name='contact'),
     path('revu/<int:review_id>', revu.views.view_review, name='view_review'),
+    path('revu/<int:review_id>/edit', revu.views.edit_review, name="edit_review"),
+    path('revu/create_ticket', revu.views.create_ticket, name='create_ticket'),
+    path('revu/<int:ticket_id>', revu.views.view_ticket, name='view_ticket'),
 ]
 
 if settings.DEBUG:

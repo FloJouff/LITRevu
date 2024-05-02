@@ -2,13 +2,16 @@
 {% block content %}
 <div class="container my-5">
     <div class="row align-items-center">
-        <h2>Créer un ticket</h2>
+        <div class="text-center">
+        <h2>Créer un ticket</h2></div>
             <form method="post">
-                {{form.as_p}}
+                {{ ticket_form.as_p}}
                 {% csrf_token %}
                 <div class="align-items-center">
-                <button type="submit" class="btn btn-secondary">Envoyer</button> 
-            </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-secondary">Envoyer</button>
+                        <a href="{% url 'login' %}" class="btn btn-secondary offset-1">Retour</a></div>
+                </div>
             </form>            
     </div>
 </div>

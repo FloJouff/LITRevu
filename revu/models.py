@@ -7,6 +7,7 @@ class Ticket(models.Model):
     # Your Ticket model definition goes here
     headline = models.CharField(max_length=128)
     body = models.CharField(max_length=8192, blank=True)
+    image = models.ImageField(blank=True)
     user = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     time_created = models.DateTimeField(auto_now_add=True)
 
@@ -26,12 +27,13 @@ class Review(models.Model):
     time_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'{self.headline}'
+        return f'{self.headline, self.body}'
 
 
 # class UserFollows(models.Model):
 #     # Your UserFollows model definition goes here
-
+    # user = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='following')
+    # followed_user = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='followed_by')
 #     class Meta:
 #         # ensures we don't get multiple UserFollows instances
 #         # for unique user-user_followed pairs
