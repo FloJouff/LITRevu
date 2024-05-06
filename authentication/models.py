@@ -11,8 +11,13 @@ class User(AbstractUser):
         (SUBSCRIBER, 'Utilisateur'),
     )
 
-    profile_photo = models.ImageField()
+    profile_photo = models.ImageField(blank=True)
     role = models.CharField(max_length=30, choices=ROLE_CHOICES)
+    follows = models.ManyToManyField(
+        'self',
+        symmetrical=False,
+        verbose_name='suit',
+    )
 
     def __str__(self):
         return f'{self.username}'

@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container px-2 my-3">
+    <div class="row align-items-center">
+        <div class="text-center">
+        <h2 class="fw-bold ">Créer une critique</h2></div>
+            <div class="container m-2 border border-dark p-4"  style="background-color: rgb(253, 250, 245);">
+                <div class="container m-2 border border-dark pb-4">
+                    <h3 class="m-3 ">Livre / Article</h3>
+                    <form method="post" enctype="multipart/form_data">
+                        {{ ticket_form.as_p}}
+                        {% csrf_token %}
+                        <div class="py-4 text-center">
+                            <button type="submit" class="btn btn-secondary col-12 h-100">Valider</button></div>
+                    </form>   
+                </div>    
+            <hr>
+            <div class="container m-2 border border-dark p-4">
+                <h3 class="m-3 ">Critique</h3>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            {{ form.rating.as_p }}
+                            {{ review_form.as_p }}
+                        </div>
+                        <div class="py-4 text-center">
+                        <button type="submit" class="btn btn-secondary col-12 h-100">Poster</button></div>
+                    </form> 
+                </div>
+            </div> 
+        </div>          
+    </div>
+</div>
+{% endblock content %}

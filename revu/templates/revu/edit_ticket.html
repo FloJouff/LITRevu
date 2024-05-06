@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container px-2 my-3">
+    <div class="border border-dark">
+    <div class="row align-items-center ">
+        <div class="text-center">
+            <h3>Modifier le ticket</h3>
+            <form method="post" enctype="multipart/form_data">
+                {{ edit_form.as_p }}
+                {% csrf_token %}
+                <button type="submit" class="btn btn-secondary">Sauvegarder</button>
+            </form>
+            <hr>
+            <h3>Supprimer le ticket ?</h3>
+            <form method="post">
+                {{ delete_form }}
+                {% csrf_token %}
+                <button type="submit" class="btn btn-secondary">Supprimer</button>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock content %}

@@ -7,7 +7,7 @@
                 <p ><a href="{% url 'create_ticket' %}" class="btn btn-secondary  col-12 h-100">Demander une critique</a></p>
             </div>
             <div class="col-6">
-                <p ><a href="{% url 'create_review' %}" class="btn btn-secondary col-12 h-100">Créer une critique</a></p>
+                <p ><a href="{% url 'create_new_review' %}" class="btn btn-secondary col-12 h-100">Créer une critique</a></p>
             </div>
         </div>
         <div class="row border border-dark">
@@ -15,39 +15,66 @@
                 <h2>Consulter les critiques</h2>
             </div>
             <div class="container">
-            {% for review in reviews %}
-                <ul class="list-unstyled">
-                    <div class="border border-dark">
-                        <div class="post">
-                            <li><a href="{% url 'view_review' review.id %}">
-                                <h4> Titre : {{ review.headline }} </h4>
-                                <p> Auteur: {{ review.user }}</p>
-                                <p class="offset-1"> {{ review.body }} </p>
+                {% for review in reviews %}
+                    <ul class="list-unstyled">
+                        <div class="border border-dark" style="background-color: rgb(253, 250, 245);">
+                            <div class="post m-1">
+                                <li><a href="{% url 'view_review' review.id %}" class="text-decoration-none" style="color: rgb(0, 0, 0);">
+                                    <h4> Titre : {{ review.headline }} </h4>
+                                    <div class="row">
+                                        <div class="col-6">
+                                        <p> {{ review.user }} a posté une critique</p></div>
+                                        <div class="col-6 text-end">
+                                        <p> {{ review.time_created }}</p></div>
+                                    </div>
+                                    <p>Note: {{ review.rating }}
+                                    <div class="rating">                                     
+                                            {% for star in "12345" %}
+                                                {% if forloop.counter <= review.rating  %}
+                                                    <span><i class="bi bi-star-fill"></i></span>
+                                                {% else %}
+                                                    <span><i class="bi bi-star"></i></span>
+                                                {% endif %}
+                                            {% endfor %}
+                                    </div></p>
+                                    <p class="offset-1"> {{ review.body }} </p>
                                 </a></li>
+                            </div>
                         </div>
-                    </div>
-                </ul>
-            {% endfor %}
+                    </ul>
+                {% endfor %}
             </div>
             <div class="text-center">
                 <h2>Consulter les tickets</h2>
             </div>
             <div class="container">
-            {% for ticket in tickets %}
-                <ul class="list-unstyled">
-                    <div class="border border-dark">
-                        <div class="post">
-                            <li><a href="{% url 'view_ticket' ticket.id %}">
-                                <p>Auteur : {{ tiket.user }} </p>
-                                <h6> Titre : {{ ticket.headline }} </h6>
-                                <p class="offset-1"> {{ ticket.body }} </p>
-                                </a></li>
+                <div class="row">
+                {% for ticket in tickets %}
+                    <ul class="list-unstyled">
+                        <div class="border border-dark" style="background-color: rgb(253, 250, 245);">
+                            <div class="post m-1">
+                                <li><a href="{% url 'view_ticket' ticket.id %}"  class="text-decoration-none" style="color: rgb(0, 0, 0);">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <p>{{ ticket.user }} a demandé une critique</p></div>
+                                            <div class="col-6 text-end">
+                                                <p> {{ ticket.time_created }}</p></div>
+                                    <h6>Titre : {{ ticket.headline }} </h6>
+                                    <p class="offset-1"> {{ ticket.body }} </p>
+                                    {% if ticket.image %}
+                                        <img src="{{ticket.image.url }}" alt="Image du ticket" class="img-fluid" style="max-width: 200px; height: auto;">
+                                    {% endif %}
+                                    </div></a>
+                                </li>
+                                <div class="text-end m-2">
+                                    <a href="{% url 'review_response' ticket.id %}" class="btn btn-secondary">Créer une critique</a>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </ul>
-            {% endfor %}
+                    </ul>
+                {% endfor %}
+                </div>
             </div>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam quidem quia assumenda vero vel numquam nisi praesentium. Sapiente laboriosam temporibus inventore sint! Veritatis cupiditate sapiente esse tempora eius dolorem eum.</p>
         </div>
     </div> 
 </section>  

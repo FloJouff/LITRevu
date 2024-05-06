@@ -1,21 +1,31 @@
+
+
 {% extends 'base.html' %}
 {% block content %}
 <div class="container my-5">
     <div class="row align-items-center">
+
         <h2>Suivre d'autres utilisateurs</h2>
-            <form method="post">
+        <div class="border border-dark pb-4"  style="background-color: rgb(253, 250, 245);">
+            <form id="follow-users-form" method="post">
                 {{form.as_p}}
                 {% csrf_token %}
-                <div class="align-items-center">
-                <button type="submit" class="btn-secondary">Envoyer</button> 
+                <div class="text-center">
+                <button type="submit" class="btn btn-secondary">Confirmer</button> 
             </div>
-            </form>            
+            </form> 
+            
+        </div>          
     </div>
     <div class="row">
         <h3>Abonnements</h3>
+        <div class="border border-dark pb-4"  style="background-color: rgb(253, 250, 245);"></div>
+        <p> {{ user.follows}}</p>
     </div>
     <div class="row">
         <h3>Abonnés</h3>
+        <div class="border border-dark pb-4"  style="background-color: rgb(253, 250, 245);"></div>
+        <p>{{ user.followed_by}}</p>
     </div>
 </div>
 {% endblock content %}

@@ -40,12 +40,16 @@ urlpatterns = [
          ),
     path('home/', revu.views.home, name='home'),
     path('signup/', authentication.views.signup_page, name='signup'),
-    path('revu/create_review', revu.views.review_upload, name='create_review'),
-    path('contact', revu.views.contact, name='contact'),
-    path('revu/<int:review_id>', revu.views.view_review, name='view_review'),
-    path('revu/<int:review_id>/edit', revu.views.edit_review, name="edit_review"),
-    path('revu/create_ticket', revu.views.create_ticket, name='create_ticket'),
-    path('revu/<int:ticket_id>', revu.views.view_ticket, name='view_ticket'),
+    path('revu/review_response/<int:ticket_id>/', revu.views.review_response, name='review_response'),
+    path('revu/create_new_review/', revu.views.create_new_review, name='create_new_review'),
+    path('revu/<int:review_id>/', revu.views.view_review, name='view_review'),
+    path('revu/<int:review_id>/edit/', revu.views.edit_review, name="edit_review"),
+    path('revu/create_ticket/', revu.views.create_ticket, name='create_ticket'),
+    path('revu/ticket/<int:ticket_id>/', revu.views.view_ticket, name='view_ticket'),
+    path('revu/ticket/<int:ticket_id>/edit/', revu.views.edit_ticket, name='edit_ticket'),
+    path('revu/follow/', revu.views.follow_users, name='follow'),
+    path('contact/', revu.views.contact, name='contact'),
+    path('no_permission', revu.views.no_permission, name='no_permission'),
 ]
 
 if settings.DEBUG:
