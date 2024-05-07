@@ -66,9 +66,11 @@
                                     {% endif %}
                                     </div></a>
                                 </li>
+                                {% if not ticket.review_provided %}
                                 <div class="text-end m-2">
                                     <a href="{% url 'review_response' ticket.id %}" class="btn btn-secondary">Créer une critique</a>
                                 </div>
+                                {% endif %}
                             </div>
                         </div>
                     </ul>

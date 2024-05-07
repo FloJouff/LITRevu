@@ -12,6 +12,7 @@ class Ticket(models.Model):
     image = models.ImageField(blank=True, null=True)
     user = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     time_created = models.DateTimeField(auto_now_add=True)
+    review_provided = models.BooleanField(default=False)
 
     def __str__(self):
         return f'{self.headline}'
@@ -41,7 +42,7 @@ class Review(models.Model):
     time_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'{self.headline, self.body}'
+        return f'{self.headline}'
 
 
 class UserFollows(models.Model):

@@ -1,7 +1,7 @@
 # from itertools import chain
 from django.db.models import CharField, Value
 from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 
 from . import forms, models
@@ -35,11 +35,13 @@ def review_response(request, ticket_id):
         review_form = forms.ReviewForm(request.POST)
         if review_form.is_valid():
             review = review_form.save(commit=False)
-            review.ticket = ticket
             review.user = request.user
+            review.ticket = ticket
+            ticket.review_provided = True
+            ticket.save()
             review.save()
             return redirect('home')
-    return render(request, 'review_response.html', {'review_form': review_form, 'ticket': ticket})
+    return render(request, 'revu/review_response.html', context={'review_form': review_form, 'ticket': ticket})
 
 
 @login_required
@@ -143,6 +145,16 @@ def edit_ticket(request, ticket_id):
     return render(request, 'revu/edit_ticket.html', context=context)
 
 
+def follow_users(request):
+    form = forms.FollowUsersForm(instance=request.user)
+    if request.method == 'POST':
+        form = forms.FollowUsersForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    return render(request, 'revu/follow_view.html', context={'form': form})
+
+
 ## Création du flux:
 # def feed(request):
 #     reviews=get_users_viewable_reviews(request.user)
@@ -156,13 +168,3 @@ def edit_ticket(request, ticket_id):
 #         reverse=True
 #     )
 #     return render(request, 'feed.html', context={'posts': posts})
-
-
-def follow_users(request):
-    form = forms.FollowUsersForm(instance=request.user)
-    if request.method == 'POST':
-        form = forms.FollowUsersForm(request.POST, instance=request.user)
-        if form.is_valid():
-            form.save()
-            return redirect('home')
-    return render(request, 'revu/follow_view.html', context={'form': form})
