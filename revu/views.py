@@ -82,6 +82,7 @@ def create_new_review(request):
         if all([ticket_form.is_valid(), review_form.is_valid()]):
             ticket = ticket_form.save(commit=False)
             ticket.user = request.user
+            ticket.review_provided = True
             ticket.save()
             review = review_form.save(commit=False)
             review.ticket = ticket
@@ -192,3 +193,15 @@ def follow_users(request):
         'followers': followers,
     }
     return render(request, 'revu/follow_view.html', context=context)
+
+
+def unfollow_user(request, user_id):
+    user = request.user
+    followed_user = User.objects.get(id=user_id)
+    try:
+        follow = UserFollows.objects.get(user=user,
+                                         followed_user=followed_user)
+        follow.delete()
+    except UserFollows.DoesNotExist:
+        pass
+    return redirect('follow')

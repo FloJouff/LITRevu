@@ -1,23 +1,27 @@
 {% extends 'base.html' %}
-
 {% block content %}
 <section>
     <div class="container mt-5">
-   <h2 class="m-5">Vos Posts</h2>
+   <h2 class="m-4">Vos Posts</h2>
    
    <div class="row border border-dark">
     <div class="container p-2">
    {% if posts %}
          {% for p in posts %}
                 {% if p.content_type == "REVIEW" %}
-                    <div class="m-2">
+                    <div class="m-2 border border-dark">
                     {% include 'revu/partials/review_snippet.html' %}
-                    </div>
-            {% else %}
-                <div class="m-2">
-                    {% include 'revu/partials/ticket_snippet.html' %}
+                    
+                    <p class="text-end m-2"><a href="{% url 'edit_review' p.id %}" class="btn btn-secondary">Modifier</a><a href="{% url 'edit_review' p.id %}" class="btn btn-secondary offset-1">Supprimer</a> </p>
                 </div>
+            {% else %}
+                <div class="m-2 border border-dark">
+                    {% include 'revu/partials/ticket_snippet.html' %}
+                
+                <p class="text-end m-2"><a href="{% url 'edit_ticket' p.id %}" class="btn btn-secondary ">Modifier</a><a href="{% url 'edit_ticket' p.id %}" class="btn btn-secondary offset-1" onsubmit="return confirm('Voulez vous vraiment supprimer ce ticket ?')">Supprimer</a></p>
+            </div>
             {% endif %}
+            
          {% endfor %}
    {% else %}
       <p>Aucun post trouvé.</p>

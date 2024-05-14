@@ -26,7 +26,13 @@
         <ul class="list-unstyled">
             {% if followings %}
                 {% for following in followings %}
-                    <li class="border border-dark p-2"> {{ following.followed_user.username}}</li>
+                    <li class="border border-dark p-2"> {{ following.followed_user.username}}
+                        <form action="{% url 'unfollow_user' following.followed_user.id %}" method="post" style="display:inline;" onsubmit="return confirm('Voulez vous vraiment arrêter de suivre cet utilisateur ?')">
+                            {% csrf_token %}
+                            <div class="text-end">
+                            <button type="submit" class="btn btn-secondary btn-sm">Désabonner</button></div>
+                            </form>
+                    </li>
                 {% endfor %}
             {% else %}
                 <p>Vous ne suivez aucun autre utilisateur</p>

@@ -41,7 +41,8 @@ urlpatterns = [
     path('revu/follow/', revu.views.follow_users, name='follow'),
     path('contact/', revu.views.contact, name='contact'),
     path('no_permission', revu.views.no_permission, name='no_permission'),
-    path('revu/posts/', revu.views.user_posts, name='user_posts')
+    path('revu/posts/', revu.views.user_posts, name='user_posts'),
+    path('revu/unfollow/<int:user_id>/', revu.views.unfollow_user, name='unfollow_user'),
 ]
 
 if settings.DEBUG:
