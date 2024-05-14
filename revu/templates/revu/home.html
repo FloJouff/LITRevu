@@ -10,72 +10,38 @@
                 <p ><a href="{% url 'create_new_review' %}" class="btn btn-secondary col-12 h-100">Créer une critique</a></p>
             </div>
         </div>
-        <div class="row border border-dark">
-            <div class="text-center">
-                <h2>Consulter les critiques</h2>
-            </div>
-            <div class="container">
-                {% for review in reviews %}
-                    <ul class="list-unstyled">
-                        <div class="border border-dark" style="background-color: rgb(253, 250, 245);">
-                            <div class="post m-1">
-                                <li><a href="{% url 'view_review' review.id %}" class="text-decoration-none" style="color: rgb(0, 0, 0);">
-                                    <h4> Titre : {{ review.headline }} </h4>
-                                    <div class="row">
-                                        <div class="col-6">
-                                        <p> {{ review.user }} a posté une critique</p></div>
-                                        <div class="col-6 text-end">
-                                        <p> {{ review.time_created }}</p></div>
-                                    </div>
-                                    <p>Note: {{ review.rating }}
-                                    <div class="rating">                                     
-                                            {% for star in "12345" %}
-                                                {% if forloop.counter <= review.rating  %}
-                                                    <span><i class="bi bi-star-fill"></i></span>
-                                                {% else %}
-                                                    <span><i class="bi bi-star"></i></span>
-                                                {% endif %}
-                                            {% endfor %}
-                                    </div></p>
-                                    <p class="offset-1"> {{ review.body }} </p>
-                                </a></li>
-                            </div>
+        <div class="row border border-dark p-2">
+            <div class="container p-2">
+                {% if page_obj %}
+                {% for p in page_obj %}
+                    {% if p.content_type == "REVIEW" %}
+                        <div class="m-2">
+                            {% include 'revu/partials/review_snippet.html' %}
                         </div>
-                    </ul>
-                {% endfor %}
-            </div>
-            <div class="text-center">
-                <h2>Consulter les tickets</h2>
-            </div>
-            <div class="container">
-                <div class="row">
-                {% for ticket in tickets %}
-                    <ul class="list-unstyled">
-                        <div class="border border-dark" style="background-color: rgb(253, 250, 245);">
-                            <div class="post m-1">
-                                <li><a href="{% url 'view_ticket' ticket.id %}"  class="text-decoration-none" style="color: rgb(0, 0, 0);">
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <p>{{ ticket.user }} a demandé une critique</p></div>
-                                            <div class="col-6 text-end">
-                                                <p> {{ ticket.time_created }}</p></div>
-                                    <h6>Titre : {{ ticket.headline }} </h6>
-                                    <p class="offset-1"> {{ ticket.body }} </p>
-                                    {% if ticket.image %}
-                                        <img src="{{ticket.image.url }}" alt="Image du ticket" class="img-fluid" style="max-width: 200px; height: auto;">
-                                    {% endif %}
-                                    </div></a>
-                                </li>
-                                {% if not ticket.review_provided %}
-                                <div class="text-end m-2">
-                                    <a href="{% url 'review_response' ticket.id %}" class="btn btn-secondary">Créer une critique</a>
-                                </div>
-                                {% endif %}
-                            </div>
+                    {% else %}
+                        <div class="m-2">
+                            {% include 'revu/partials/ticket_snippet.html' %}
                         </div>
-                    </ul>
+                    {% endif %}
+                    
                 {% endfor %}
-                </div>
+                <span>
+                    {% if page_obj.has_previous %}
+                    <a href="?page=1">&laquo; première</a>
+                    <a href="?page={{ page_obj.previous_page_number }}">précédente</a>
+                    {% endif %}
+                    <span>
+                        Page {{ page_obj.number }} sur {{ page_obj.paginator.num_pages }}.
+                    </span>
+                    {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">suivante</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}">dernière &raquo;</a>
+                    {% endif %}
+                </span>
+                {% else %}
+                        <p>Pas de posts dans votre flux</p>
+                {% endif %}
+                
             </div>
         </div>
     </div> 

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section>
+    <div class="container mt-5">
+   <h2 class="m-5">Vos Posts</h2>
+   
+   <div class="row border border-dark">
+    <div class="container p-2">
+   {% if posts %}
+         {% for p in posts %}
+                {% if p.content_type == "REVIEW" %}
+                    <div class="m-2">
+                    {% include 'revu/partials/review_snippet.html' %}
+                    </div>
+            {% else %}
+                <div class="m-2">
+                    {% include 'revu/partials/ticket_snippet.html' %}
+                </div>
+            {% endif %}
+         {% endfor %}
+   {% else %}
+      <p>Aucun post trouvé.</p>
+   {% endif %}
+   </div>
+   </div>
+</div>
+</section>
+{% endblock content %}

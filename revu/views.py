@@ -1,20 +1,35 @@
-# from itertools import chain
-from django.db.models import CharField, Value
+from itertools import chain
+from django.db.models import CharField, Value, Q
+from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
+from authentication.models import User
 
 from . import forms, models
+from .models import UserFollows
 
 
 @login_required
 def home(request):
-    reviews = models.Review.objects.all()
-    tickets = models.Ticket.objects.all()
+    user = request.user
+    following_users = User.objects.filter(
+        id__in=UserFollows.objects.filter(user=user).values('followed_user'))
+    reviews = models.Review.objects.filter(
+        Q(user__in=following_users) | 
+        Q(user=user)).annotate(content_type=Value('REVIEW', CharField()))
+    tickets = models.Ticket.objects.filter(
+        Q(user__in=following_users) | 
+        Q(user=user)).annotate(content_type=Value('TICKET', CharField()))
+    posts = sorted(chain(reviews, tickets),
+                   key=lambda post: post.time_created,
+                   reverse=True)
+    paginator = Paginator(posts, 4)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     context = {
-        'reviews': reviews,
-        'tickets': tickets
-    }
+        'page_obj': page_obj
+        }
     return render(request, 'revu/home.html', context=context)
 
 
@@ -24,6 +39,18 @@ def contact(request):
 
 def no_permission(request):
     return render(request, 'revu/no_permission.html')
+
+
+@login_required
+def user_posts(request):
+    reviews = models.Review.objects.filter(
+        user=request.user).annotate(content_type=Value('REVIEW', CharField()))
+    tickets = models.Ticket.objects.filter(
+        user=request.user).annotate(content_type=Value('TICKET', CharField()))
+    posts = sorted(chain(reviews, tickets),
+                   key=lambda post: post.time_created,
+                   reverse=True)
+    return render(request, 'revu/posts.html', context={'posts': posts})
 
 
 @login_required
@@ -41,7 +68,8 @@ def review_response(request, ticket_id):
             ticket.save()
             review.save()
             return redirect('home')
-    return render(request, 'revu/review_response.html', context={'review_form': review_form, 'ticket': ticket})
+    return render(request, 'revu/review_response.html',
+                  context={'review_form': review_form, 'ticket': ticket})
 
 
 @login_required
@@ -129,7 +157,8 @@ def edit_ticket(request, ticket_id):
     delete_form = forms.DeleteTicketForm()
     if request.method == 'POST':
         if 'edit_ticket' in request.POST:
-            edit_form = forms.TicketForm(request.POST, request.FILES, instance=ticket)
+            edit_form = forms.TicketForm(request.POST,
+                                         request.FILES, instance=ticket)
             if edit_form.is_valid():
                 edit_form.save()
                 return redirect('home')
@@ -146,25 +175,20 @@ def edit_ticket(request, ticket_id):
 
 
 def follow_users(request):
-    form = forms.FollowUsersForm(instance=request.user)
-    if request.method == 'POST':
-        form = forms.FollowUsersForm(request.POST, instance=request.user)
+    form = forms.FollowUsersForm(request.POST or None)
+    followings = UserFollows.objects.filter(user=request.user)
+    followers = UserFollows.objects.filter(followed_user=request.user)
+    if request.method == "POST":
         if form.is_valid():
-            form.save()
-            return redirect('home')
-    return render(request, 'revu/follow_view.html', context={'form': form})
+            username = form.cleaned_data['username']
+            user_to_follow = User.objects.get(username=username)
+            UserFollows.objects.get_or_create(user=request.user,
+                                              followed_user=user_to_follow)
+            return redirect('follow')
 
-
-## Création du flux:
-# def feed(request):
-#     reviews=get_users_viewable_reviews(request.user)
-#     reviews=reviews.annotate(content_type=Value('Review', CharField()))
-
-#     tickets=get_user_viewable_tickets(request.user)
-#     tickets=tickets.annotate(content_type=Value('Ticket', CharField()))
-
-#     posts = sorted(
-#         chain=lambda post: post.time_created,
-#         reverse=True
-#     )
-#     return render(request, 'feed.html', context={'posts': posts})
+    context = {
+        'form': form,
+        'followings': followings,
+        'followers': followers,
+    }
+    return render(request, 'revu/follow_view.html', context=context)

@@ -9,8 +9,8 @@ User = get_user_model()
 
 class ReviewForm(forms.ModelForm):
     edit_review = forms.BooleanField(widget=forms.HiddenInput, initial=True)
-    CHOICES = [('0', '- 0'), ('1', '- 1'), ('2', '- 2'),
-                ('3', '- 3'), ('4', '- 4'), ('5', '- 5')]
+    CHOICES = [('0', '- 0'), ('1', '- 1'), ('2', '- 2'), ('3', '- 3'),
+               ('4', '- 4'), ('5', '- 5')]
     rating = forms.ChoiceField(choices=CHOICES, widget=forms.RadioSelect)
 
     class Meta:
@@ -20,7 +20,8 @@ class ReviewForm(forms.ModelForm):
         labels = {'headline': 'Titre', 'rating': 'Note', 'body': 'Commentaire'}
 
         widgets = {
-            'headline': forms.TextInput(attrs={'class': 'form-control', 'label': 'Titre'}),
+            'headline': forms.TextInput(attrs={'class': 'form-control',
+                                               'label': 'Titre'}),
             'body': forms.Textarea(attrs={'class': 'form-control'}),
         }
 
@@ -30,7 +31,8 @@ class DeleteReviewForm(forms.Form):
 
 
 class TicketForm(forms.ModelForm):
-    edit_ticket = forms.BooleanField(widget=forms.HiddenInput, initial=True, required=False)
+    edit_ticket = forms.BooleanField(widget=forms.HiddenInput, initial=True,
+                                     required=False)
 
     class Meta:
         model = models.Ticket
@@ -47,7 +49,15 @@ class DeleteTicketForm(forms.Form):
     delete_ticket = forms.BooleanField(widget=forms.HiddenInput, initial=True)
 
 
-class FollowUsersForm(forms.ModelForm):
+class FollowUsersForm(forms.Form):
+    username = forms.CharField(max_length=64, label='Nom d\'utilisateur')
+
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        if not User.objects.filter(username=username).exists():
+            raise forms.ValidationError('Cet Utilisateur n\'existe pas.')
+        return username
+
     class Meta:
         model = User
-        fields = ['follows']
+        fields = ['follow']
