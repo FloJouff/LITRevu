@@ -4,7 +4,7 @@
     <div class="border border-dark p-4">
     <div class="row align-items-center">
 
-        <h2>Suivre d'autres utilisateurs</h2>
+        <h3 class="m-2">Suivre d'autres utilisateurs</h2>
         <div class="border border-dark p-2"  style="background-color: rgb(253, 250, 245);">
             <div class="row">
                 <div class="col-6">
@@ -12,7 +12,7 @@
                 {{form.as_p}}
                 {% csrf_token %}
             </div>
-                <div class="text-center col-6">
+                <div class="text-end col-6">
                 <button type="submit" class="btn btn-secondary">Suivre</button> 
             </div>
             </form> 
@@ -21,8 +21,8 @@
         </div>          
     </div>
     <div class="row">
-        <h3>Abonnements</h3>
-        <div class="border border-dark p-2 mt-2"  style="background-color: rgb(253, 250, 245);">
+        <h3 class="m-2">Abonnements</h3>
+        <div class="border border-dark p-2"  style="background-color: rgb(253, 250, 245);">
         <ul class="list-unstyled">
             {% if followings %}
                 {% for following in followings %}
@@ -41,7 +41,7 @@
     </div>
     </div>
     <div class="row">
-        <h3>Abonnés</h3>
+        <h3 class="m-2">Abonnés</h3>
         <div class="border border-dark p-2 "  style="background-color: rgb(253, 250, 245);">
         <ul class="list-unstyled">
             {% if followers %}
@@ -53,6 +53,9 @@
             {% endif %}
         </ul>
     </div>
+    </div>
+    <div class="text-end m-1 pt-1">
+        <a href="{% url 'block_view' %}" class="btn btn-secondary">Bloquer un utilisateur</a>
     </div>
 </div>
 </div>

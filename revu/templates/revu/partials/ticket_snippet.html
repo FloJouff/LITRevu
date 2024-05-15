@@ -3,7 +3,11 @@
         <a href="{% url 'view_ticket' p.id %}"  class="text-decoration-none" style="color: rgb(0, 0, 0);">
             <div class="row">
                 <div class="col-6">
-                    <p>Ticket - {{ p.user }} </p></div>
+                    {% if p.user == request.user %}
+                        <p> Ticket - Vous</p></div>
+                    {% else %}
+                        <p>Ticket - {{ p.user }} </p></div>
+                    {% endif %}
                     <div class="col-6 text-end">
                         <p> {{ p.time_created }}</p></div>
             <h6>Titre : {{ p.headline }} </h6>

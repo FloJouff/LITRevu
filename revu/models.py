@@ -1,6 +1,7 @@
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.conf import settings
 from django.db import models
+from authentication.models import User
 
 
 from PIL import Image
@@ -61,4 +62,17 @@ class UserFollows(models.Model):
         unique_together = (
             "user",
             "followed_user",
+        )
+
+
+class BlockedUser(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE,
+                             related_name='blocked_users')
+    blocked_user = models.ForeignKey(User, on_delete=models.CASCADE,
+                                     related_name='blocked_by_users')
+
+    class Meta:
+        unique_together = (
+            'user',
+            'blocked_user'
         )

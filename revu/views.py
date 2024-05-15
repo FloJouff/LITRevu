@@ -1,26 +1,34 @@
 from itertools import chain
 from django.db.models import CharField, Value, Q
 from django.core.paginator import Paginator
+from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from authentication.models import User
 
 from . import forms, models
-from .models import UserFollows
+from .models import UserFollows, BlockedUser
 
 
 @login_required
 def home(request):
     user = request.user
+    blocked_users = BlockedUser.objects.filter(user=user).values_list(
+        'blocked_user', flat=True)
     following_users = User.objects.filter(
         id__in=UserFollows.objects.filter(user=user).values('followed_user'))
-    reviews = models.Review.objects.filter(
-        Q(user__in=following_users) | 
-        Q(user=user)).annotate(content_type=Value('REVIEW', CharField()))
     tickets = models.Ticket.objects.filter(
-        Q(user__in=following_users) | 
-        Q(user=user)).annotate(content_type=Value('TICKET', CharField()))
+        Q(user__in=following_users) |
+        Q(user=user) & 
+        ~Q(user__in=blocked_users)).annotate(content_type=Value('TICKET',
+                                                                CharField()))
+    reviews = models.Review.objects.filter(
+        Q(user__in=following_users) |
+        Q(user=user) |
+        Q(ticket__in=tickets) & 
+        ~Q(user__in=blocked_users)).annotate(content_type=Value('REVIEW',
+                                                                CharField()))
     posts = sorted(chain(reviews, tickets),
                    key=lambda post: post.time_created,
                    reverse=True)
@@ -128,6 +136,19 @@ def edit_review(request, review_id):
 
 
 @login_required
+def delete_review(request, review_id):
+    review = get_object_or_404(models.Review, id=review_id)
+    if request.user == review.user:
+        review.delete()
+        messages.success(request, "La critique a été supprimée avec succès.")
+    else:
+        messages.error(request,
+                       "Vous n'êtes pas autorisé à supprimer cette critique.")
+
+    return redirect('user_posts')
+
+
+@login_required
 def create_ticket(request):
     ticket_form = forms.TicketForm()
     if request.method == 'POST':
@@ -175,6 +196,19 @@ def edit_ticket(request, ticket_id):
     return render(request, 'revu/edit_ticket.html', context=context)
 
 
+@login_required
+def delete_ticket(request, ticket_id):
+    ticket = get_object_or_404(models.Ticket, id=ticket_id)
+    if request.user == ticket.user:
+        ticket.delete()
+        messages.success(request, "Le ticket a été supprimé avec succès.")
+    else:
+        messages.error(request,
+                       "Vous n'êtes pas autorisé à supprimer ce ticket.")
+
+    return redirect('user_posts')
+
+
 def follow_users(request):
     form = forms.FollowUsersForm(request.POST or None)
     followings = UserFollows.objects.filter(user=request.user)
@@ -205,3 +239,45 @@ def unfollow_user(request, user_id):
     except UserFollows.DoesNotExist:
         pass
     return redirect('follow')
+
+
+def block_user(request):
+    form = forms.FollowUsersForm(request.POST or None)
+    user = request.user
+    blocked_user = BlockedUser.objects.filter(user=request.user)
+    if request.method == "POST":
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            user_to_block = User.objects.get(username=username)
+            BlockedUser.objects.get_or_create(user=request.user,
+                                              blocked_user=user_to_block)
+            messages.success(request, "L'utilisateur a été bloqué avec succès")
+            UserFollows.objects.filter(user=user,
+                                       followed_user=user_to_block).delete()
+            UserFollows.objects.filter(user=user_to_block,
+                                       followed_user=user).delete()
+            return redirect('block_view')
+    context = {
+        'block_form': form,
+        'user': user,
+        'blocked_users': blocked_user,
+    }
+    return render(request, 'revu/block_view.html', context=context)
+
+
+def unblock_user(request, user_id):
+    user = request.user
+    blocked_user = User.objects.filter(id=user_id).first()
+
+    if blocked_user:
+        BlockedUser.objects.filter(user=user,
+                                   blocked_user=blocked_user).delete()
+        messages.success(request, "L'utilisateur a été débloqué avec succès.")
+        if not UserFollows.objects.filter(user=user,
+                                          followed_user=blocked_user).exists():
+            UserFollows.objects.create(user=user, followed_user=blocked_user)
+        if not UserFollows.objects.filter(user=blocked_user,
+                                          followed_user=user).exists():
+            UserFollows.objects.create(user=blocked_user, followed_user=user)
+
+    return redirect('block_view')

@@ -12,13 +12,13 @@
                     <div class="m-2 border border-dark">
                     {% include 'revu/partials/review_snippet.html' %}
                     
-                    <p class="text-end m-2"><a href="{% url 'edit_review' p.id %}" class="btn btn-secondary">Modifier</a><a href="{% url 'edit_review' p.id %}" class="btn btn-secondary offset-1">Supprimer</a> </p>
+                    <p class="text-end m-2"><a href="{% url 'edit_review' p.id %}" class="btn btn-secondary">Modifier</a><a href="{% url 'delete_review' p.id %}" class="btn btn-secondary offset-1">Supprimer</a> </p>
                 </div>
             {% else %}
                 <div class="m-2 border border-dark">
                     {% include 'revu/partials/ticket_snippet.html' %}
                 
-                <p class="text-end m-2"><a href="{% url 'edit_ticket' p.id %}" class="btn btn-secondary ">Modifier</a><a href="{% url 'edit_ticket' p.id %}" class="btn btn-secondary offset-1" onsubmit="return confirm('Voulez vous vraiment supprimer ce ticket ?')">Supprimer</a></p>
+                <p class="text-end m-2"><a href="{% url 'edit_ticket' p.id %}" class="btn btn-secondary ">Modifier</a><a href="{% url 'delete_ticket' p.id %}" class="btn btn-secondary offset-1">Supprimer</a></p>
             </div>
             {% endif %}
             
