@@ -8,10 +8,14 @@ User = get_user_model()
 
 
 class ReviewForm(forms.ModelForm):
-    edit_review = forms.BooleanField(widget=forms.HiddenInput, initial=True)
+    edit_review = forms.BooleanField(widget=forms.HiddenInput, initial=True,
+                                     required=False)
     CHOICES = [('0', '- 0'), ('1', '- 1'), ('2', '- 2'), ('3', '- 3'),
                ('4', '- 4'), ('5', '- 5')]
-    rating = forms.ChoiceField(choices=CHOICES, widget=forms.RadioSelect)
+    rating = forms.ChoiceField(choices=CHOICES,
+                               label='Note',
+                               widget=forms.RadioSelect(attrs={
+                                   'class': 'd-flex m-2 p-2'}))
 
     class Meta:
 

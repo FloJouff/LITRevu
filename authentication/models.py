@@ -18,12 +18,6 @@ class User(AbstractUser):
         symmetrical=False,
         verbose_name='suit',
     )
-    # blocked_users = models.ManyToManyField(
-    #     'self',
-    #     blank=True,
-    #     symmetrical=False,
-    #     verbose_name='blocked_by',
-    # )
 
     def __str__(self):
         return f'{self.username}'

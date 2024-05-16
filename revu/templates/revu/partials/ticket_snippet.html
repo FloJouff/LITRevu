@@ -4,10 +4,11 @@
             <div class="row">
                 <div class="col-6">
                     {% if p.user == request.user %}
-                        <p> Ticket - Vous</p></div>
+                        <p> Ticket - Vous</p>
                     {% else %}
-                        <p>Ticket - {{ p.user }} </p></div>
+                        <p>Ticket - {{ p.user }} </p>
                     {% endif %}
+                </div>
                     <div class="col-6 text-end">
                         <p> {{ p.time_created }}</p></div>
             <h6>Titre : {{ p.headline }} </h6>

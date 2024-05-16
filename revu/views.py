@@ -32,7 +32,7 @@ def home(request):
     posts = sorted(chain(reviews, tickets),
                    key=lambda post: post.time_created,
                    reverse=True)
-    paginator = Paginator(posts, 4)
+    paginator = Paginator(posts, 5)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     context = {
@@ -58,7 +58,13 @@ def user_posts(request):
     posts = sorted(chain(reviews, tickets),
                    key=lambda post: post.time_created,
                    reverse=True)
-    return render(request, 'revu/posts.html', context={'posts': posts})
+    paginator = Paginator(posts, 5)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    context = {
+        'page_obj': page_obj
+        }
+    return render(request, 'revu/posts.html', context=context)
 
 
 @login_required
@@ -85,7 +91,7 @@ def create_new_review(request):
     ticket_form = forms.TicketForm()
     review_form = forms.ReviewForm()
     if request.method == 'POST':
-        ticket_form = forms.TicketForm(request.POST)
+        ticket_form = forms.TicketForm(request.POST, request.FILES)
         review_form = forms.ReviewForm(request.POST)
         if all([ticket_form.is_valid(), review_form.is_valid()]):
             ticket = ticket_form.save(commit=False)
@@ -140,6 +146,7 @@ def delete_review(request, review_id):
     review = get_object_or_404(models.Review, id=review_id)
     if request.user == review.user:
         review.delete()
+        # review.ticket.review_provided = False
         messages.success(request, "La critique a été supprimée avec succès.")
     else:
         messages.error(request,
