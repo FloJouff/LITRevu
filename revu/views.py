@@ -20,13 +20,13 @@ def home(request):
         id__in=UserFollows.objects.filter(user=user).values('followed_user'))
     tickets = models.Ticket.objects.filter(
         Q(user__in=following_users) |
-        Q(user=user) & 
+        Q(user=user) &
         ~Q(user__in=blocked_users)).annotate(content_type=Value('TICKET',
                                                                 CharField()))
     reviews = models.Review.objects.filter(
         Q(user__in=following_users) |
         Q(user=user) |
-        Q(ticket__in=tickets) & 
+        Q(ticket__in=tickets) &
         ~Q(user__in=blocked_users)).annotate(content_type=Value('REVIEW',
                                                                 CharField()))
     posts = sorted(chain(reviews, tickets),

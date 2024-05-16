@@ -5,15 +5,15 @@
   
 ## Fonctionnalités de l'application:
   Cette application permet aux utilisateurs :
-    - de se connecter, se déconnecter et de s’inscrire sur le site.
+ - de se connecter, se déconnecter et de s’inscrire sur le site.
     (Le reste du contenu du site n'est accessible qu'aux utilisateurs connectés)
-    - de consulter un flux contenant les derniers tickets et les commentaires des utilisateurs qu'il suit, classés par ordre antichronologique.
-    - de créer des critiques en réponse à des tickets
-    - de créer de nouvelles critiques . Dans le cadre d'un processus en une étape, l'utilisateur créera un ticket puis un commentaire en réponse à son propre ticket
-    - de voir, modifier et supprimer ses propres tickets et commentaires.
-    - de suivre les autres utilisateurs en entrant leur nom d'utilisateur.
-    - de voir la liste des utilisateurs qu'il suit et qui le suivent.
-    - de bloquer un utilisateurs et de voir la liste des utlisateurs bloqués.
+ - de consulter un flux contenant les derniers tickets et les commentaires des utilisateurs qu'il suit, classés par ordre antichronologique.
+ - de créer des critiques en réponse à des tickets
+ - de créer de nouvelles critiques . Dans le cadre d'un processus en une étape, l'utilisateur créera un ticket puis un commentaire en réponse à son propre ticket
+ - de voir, modifier et supprimer ses propres tickets et commentaires.
+ - de suivre les autres utilisateurs en entrant leur nom d'utilisateur.
+ - de voir la liste des utilisateurs qu'il suit et qui le suivent.
+ - de bloquer un utilisateurs et de voir la liste des utlisateurs bloqués.
     
 ## Pré-requis:
    - Language de programmation:

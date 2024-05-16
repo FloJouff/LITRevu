@@ -16,7 +16,11 @@ class SignupForm(UserCreationForm):
                                     'class': 'form-control',
                                     'style': 'width: 300px'}),
                                 help_text='',)
-    username = forms.CharField(label="Nom d'utilisateur", widget=forms.TextInput(attrs={'class': 'form-control ', 'style': 'width: 300px', 'label': 'Nom d\'utilisateur'}), help_text='',)
+    username = forms.CharField(label="Nom d'utilisateur",
+                               widget=forms.TextInput(attrs={
+                                   'class': 'form-control ',
+                                   'style': 'width: 300px',
+                                   'label': 'Nom d\'utilisateur'}), help_text='',)
 
     class Meta(UserCreationForm.Meta):
         model = get_user_model()
