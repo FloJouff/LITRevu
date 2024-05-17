@@ -61,6 +61,19 @@ Une fois l'installation terminée, taper la commande suivante pour vous assurer 
 ## Utilisation:
    - Exécuter le programme en tapant "py manage.py" dans la console ou à l'aide d'un éditeur de code.
    - Dans le terminal, tapez: 
-      $ python manage.py runserver 
+      
+        $ python manage.py runserver 
+
       pour lancer le serveur local.
    - Dans votre navigateur, rendez vous à l' adresse:" http://127.0.0.1:8000/" pour acceder au site.
+
+## Administration du site par un développeur:
+   - Créer un profil "superuser" dans le terminal:
+      $ python manage.py createsuperuser
+   
+   - Suivez les instructions de l'invite pour créer votre superuser. 
+   Vous n'avez pas besoin de remplir une adresse électronique, mais n'oubliez pas votre mot de passe.
+
+   - Ensuite, exécutez le serveur de développement, et dans votre navigateur, allez sur http://127.0.0.1:8000/admin/ 
+   - À partir de là, vous pourrez gérer les différents modèles enregistrés sur le site d'administration.
+

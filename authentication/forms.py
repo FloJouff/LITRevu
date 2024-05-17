@@ -4,6 +4,11 @@ from django.contrib.auth import get_user_model
 
 
 class SignupForm(UserCreationForm):
+    """SignUp Form
+
+    Args:
+        UserCreationForm (form): default django signup form
+    """
     password1 = forms.CharField(label="Mot de passe",
                                 strip=False,
                                 widget=forms.PasswordInput(attrs={
@@ -27,11 +32,18 @@ class SignupForm(UserCreationForm):
 
 
 class LoginForm(forms.Form):
+    """Login form
+
+    Args:
+        forms (form): django form model
+    """
     username = forms.CharField(max_length=63, label='Nom d\'utilisateur')
     password = forms.CharField(max_length=63, widget=forms.PasswordInput,
                                label='Mot de passe')
 
     widgets = {
-            'username': forms.TextInput(attrs={'class': 'form-control'}),
-            'password': forms.PasswordInput(attrs={'class': 'form-control'}),
+            'username': forms.TextInput(attrs={'class': 'form-control',
+                                               'style': 'width: 300px'}),
+            'password': forms.PasswordInput(attrs={'class': 'form-control',
+                                                   'style': 'width: 300px'}),
         }

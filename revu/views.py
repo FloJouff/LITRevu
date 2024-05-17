@@ -13,6 +13,9 @@ from .models import UserFollows, BlockedUser
 
 @login_required
 def home(request):
+    """Feed view
+
+    """
     user = request.user
     blocked_users = BlockedUser.objects.filter(user=user).values_list(
         'blocked_user', flat=True)
@@ -42,15 +45,23 @@ def home(request):
 
 
 def contact(request):
+    """contact view
+
+    """
     return render(request, 'revu/contact.html')
 
 
 def no_permission(request):
+    """View if user is not allowed to edit or delete a post
+
+    """
     return render(request, 'revu/no_permission.html')
 
 
 @login_required
 def user_posts(request):
+    """User's posts view
+    """
     reviews = models.Review.objects.filter(
         user=request.user).annotate(content_type=Value('REVIEW', CharField()))
     tickets = models.Ticket.objects.filter(
@@ -69,6 +80,13 @@ def user_posts(request):
 
 @login_required
 def review_response(request, ticket_id):
+    """View to create a reveiw for an existing ticket
+
+    Args:
+        ticket_id (int): ticket's id
+
+
+    """
     ticket = get_object_or_404(models.Ticket, id=ticket_id)
     review_form = forms.ReviewForm()
 
@@ -88,6 +106,9 @@ def review_response(request, ticket_id):
 
 @login_required
 def create_new_review(request):
+    """View to create a ticket and a review in the same time
+
+    """
     ticket_form = forms.TicketForm()
     review_form = forms.ReviewForm()
     if request.method == 'POST':
@@ -102,6 +123,7 @@ def create_new_review(request):
             review.ticket = ticket
             review.user = request.user
             review.save()
+            ticket.save()
             return redirect('home')
     context = {
         'ticket_form': ticket_form,
@@ -112,12 +134,24 @@ def create_new_review(request):
 
 @login_required
 def view_review(request, review_id):
+    """Allow to select a review
+
+    Args:
+
+        review_id (int): review's id
+    """
     review = get_object_or_404(models.Review, id=review_id)
     return render(request, 'revu/view_review.html', {'review': review})
 
 
 @login_required
 def edit_review(request, review_id):
+    """Edit a review
+
+    Args:
+
+        review_id (int): review's id
+    """
     review = get_object_or_404(models.Review, id=review_id)
     if review.user != request.user:
         return redirect('no_permission')
@@ -143,6 +177,12 @@ def edit_review(request, review_id):
 
 @login_required
 def delete_review(request, review_id):
+    """Delete a review
+
+    Args:
+
+        review_id (int): review's id
+    """
     review = get_object_or_404(models.Review, id=review_id)
     if request.user == review.user:
         review.delete()
@@ -157,6 +197,9 @@ def delete_review(request, review_id):
 
 @login_required
 def create_ticket(request):
+    """Create a new ticket
+
+    """
     ticket_form = forms.TicketForm()
     if request.method == 'POST':
         ticket_form = forms.TicketForm(request.POST, request.FILES)
@@ -173,12 +216,24 @@ def create_ticket(request):
 
 @login_required
 def view_ticket(request, ticket_id):
+    """Allow to view a ticket
+
+    Args:
+
+        ticket_id (int): ticket's id
+    """
     ticket = get_object_or_404(models.Ticket, id=ticket_id)
     return render(request, 'revu/view_ticket.html', {'ticket': ticket})
 
 
 @login_required
 def edit_ticket(request, ticket_id):
+    """Edit a ticket
+
+    Args:
+        ticket_id (int): ticket's id
+
+    """
     ticket = get_object_or_404(models.Ticket, id=ticket_id)
     if ticket.user != request.user:
         return redirect('no_permission')
@@ -205,6 +260,11 @@ def edit_ticket(request, ticket_id):
 
 @login_required
 def delete_ticket(request, ticket_id):
+    """Delete a ticket
+
+    Args:
+        ticket_id (int): ticket's id
+    """
     ticket = get_object_or_404(models.Ticket, id=ticket_id)
     if request.user == ticket.user:
         ticket.delete()
@@ -217,6 +277,10 @@ def delete_ticket(request, ticket_id):
 
 
 def follow_users(request):
+    """Follow new user, see who follows who
+
+
+    """
     form = forms.FollowUsersForm(request.POST or None)
     followings = UserFollows.objects.filter(user=request.user)
     followers = UserFollows.objects.filter(followed_user=request.user)
@@ -237,6 +301,12 @@ def follow_users(request):
 
 
 def unfollow_user(request, user_id):
+    """unfollow a user
+
+    Args:
+        user_id (int): user's id
+
+    """
     user = request.user
     followed_user = User.objects.get(id=user_id)
     try:
@@ -249,6 +319,10 @@ def unfollow_user(request, user_id):
 
 
 def block_user(request):
+    """Block a user, see who user is blocking
+
+
+    """
     form = forms.FollowUsersForm(request.POST or None)
     user = request.user
     blocked_user = BlockedUser.objects.filter(user=request.user)
@@ -273,6 +347,12 @@ def block_user(request):
 
 
 def unblock_user(request, user_id):
+    """unblock a user
+
+    Args:
+        user_id (int): user's id
+
+    """
     user = request.user
     blocked_user = User.objects.filter(id=user_id).first()
 

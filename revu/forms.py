@@ -8,6 +8,11 @@ User = get_user_model()
 
 
 class ReviewForm(forms.ModelForm):
+    """Review form
+
+    Args:
+        forms : django form model
+    """
     edit_review = forms.BooleanField(widget=forms.HiddenInput, initial=True,
                                      required=False)
     CHOICES = [('0', '- 0'), ('1', '- 1'), ('2', '- 2'), ('3', '- 3'),
@@ -31,10 +36,18 @@ class ReviewForm(forms.ModelForm):
 
 
 class DeleteReviewForm(forms.Form):
+    """Delete Review Form
+
+    """
     delete_review = forms.BooleanField(widget=forms.HiddenInput, initial=True)
 
 
 class TicketForm(forms.ModelForm):
+    """Ticket form
+
+    Args:
+        forms : django form model
+    """
     edit_ticket = forms.BooleanField(widget=forms.HiddenInput, initial=True,
                                      required=False)
 
@@ -50,10 +63,19 @@ class TicketForm(forms.ModelForm):
 
 
 class DeleteTicketForm(forms.Form):
+    """Delete ticket form
+
+    """
     delete_ticket = forms.BooleanField(widget=forms.HiddenInput, initial=True)
 
 
 class FollowUsersForm(forms.Form):
+    """Follow and block user forms
+
+    Args:
+        forms : django form model
+
+    """
     username = forms.CharField(max_length=64, label='Nom d\'utilisateur')
 
     def clean_username(self):

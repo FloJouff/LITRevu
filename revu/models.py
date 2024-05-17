@@ -8,6 +8,12 @@ from PIL import Image
 
 
 class Ticket(models.Model):
+    """Ticket model
+
+    Args:
+        models: django default model
+
+    """
     headline = models.CharField(max_length=128)
     body = models.CharField(max_length=8192, blank=True)
     image = models.ImageField(blank=True, null=True)
@@ -33,6 +39,12 @@ class Ticket(models.Model):
 
 
 class Review(models.Model):
+    """Review model
+
+    Args:
+        models: django default model
+
+    """
     ticket = models.ForeignKey(to=Ticket, on_delete=models.CASCADE)
     rating = models.PositiveSmallIntegerField(
         # validates that rating must be between 0 and 5
@@ -49,6 +61,11 @@ class Review(models.Model):
 
 
 class UserFollows(models.Model):
+    """Follower and following User model
+
+    Args:
+        models: django default model
+    """
     user = models.ForeignKey(to=settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE,
                              related_name='following')
@@ -66,6 +83,11 @@ class UserFollows(models.Model):
 
 
 class BlockedUser(models.Model):
+    """Blocked User model
+
+    Args:
+        models: django default model
+    """
     user = models.ForeignKey(User, on_delete=models.CASCADE,
                              related_name='blocked_users')
     blocked_user = models.ForeignKey(User, on_delete=models.CASCADE,

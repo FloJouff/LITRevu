@@ -2,19 +2,20 @@
     <div class="border border-dark p-3" style="background-color: rgb(253, 250, 245);">
         <div class="post m-1">
             <a href="{% url 'view_review' p.id %}" class="text-decoration-none" style="color: rgb(0, 0, 0);">
-                <h4> Titre : {{ p.headline }} </h4>
                 <div class="row">
                     <div class="col-6">
                         {% if p.user == request.user %}
-                            <p> Vous avez posté une critique</p></div>
+                            <p> Vous avez publié une critique</p></div>
                         {% else %}
-                            <p> {{ p.user }} a posté une critique</p></div>
+                            <p> {{ p.user }} a publié une critique</p></div>
                         {% endif %}
                     <div class="col-6 text-end">
                     <p> {{ p.time_created }}</p></div>
                 </div>
-                <p>Note: {{ p.rating }}
-                <div class="rating">                                     
+                <div class="row">
+                    <div class="col-4">
+                <p><span class="h4 fw-bold"> {{ p.headline }} </span></p></div>
+                <div class="rating col-8">                                     
                         {% for star in "12345" %}
                             {% if forloop.counter <= p.rating  %}
                                 <span><i class="bi bi-star-fill"></i></span>
@@ -22,8 +23,9 @@
                                 <span><i class="bi bi-star"></i></span>
                             {% endif %}
                         {% endfor %}
-                </div></p>
-                <p class="offset-1"> {{ p.body }} </p>
+                </div>
+                </div>
+                <p> {{ p.body }} </p>
             </a>
             <div class="border border-dark" style="background-color: rgb(253, 250, 245);">
                 <div class="post m-1">
@@ -40,7 +42,7 @@
                                 <div class="col-6 text-end">
                                     <p> {{ p.ticket.time_created }}</p></div>
                         <h6>Titre : {{ p.ticket.headline }} </h6>
-                        <p class="offset-1"> {{ p.ticket.body }} </p>
+                        <!-- <p class="offset-1"> {{ p.ticket.body }} </p> -->
                         {% if p.ticket.image %}
                             <img src="{{ p.ticket.image.url }}" alt="Image du ticket" class="img-fluid" style="max-width: 200px; height: auto;">
                         {% endif %}

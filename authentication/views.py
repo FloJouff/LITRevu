@@ -7,6 +7,9 @@ from . import forms
 
 
 def signup_page(request):
+    """Sign Up page view
+
+    """
     form = forms.SignupForm()
     if request.method == 'POST':
         form = forms.SignupForm(request.POST)

@@ -9,9 +9,11 @@
         <a href="{% url 'signup' %}" class="btn btn-secondary">S'incrire</a></div>
         </div>
     <div class="col-6 align-items-center">
+        <div class="row">
         <div class="text-center">
         <h2 >Connectez-vous</h2>
-        <div class="form-group">
+        <div class="col-3"></div>
+        <div class="form-group col-8 text-end">
             <form method="post">
                 {{ form.as_p }}
                 {% csrf_token %}
@@ -20,7 +22,9 @@
                 </div>
             </form>
         </div>
+        <div class="col-1"></div>
     </div>
+</div>
 </div>
 </div>
 </div>

@@ -3,6 +3,11 @@ from django.contrib.auth.models import AbstractUser
 
 
 class User(AbstractUser):
+    """User model
+
+    Args:
+        AbstractUser (_type_): django default user model
+    """
     DEVELOPER = "DEVELOPER"
     SUBSCRIBER = "SUBSCRIBER"
 
