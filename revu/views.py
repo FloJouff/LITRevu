@@ -45,7 +45,7 @@ def home(request):
 
 
 def contact(request):
-    """contact view
+    """Contact view
 
     """
     return render(request, 'revu/contact.html')
@@ -80,7 +80,7 @@ def user_posts(request):
 
 @login_required
 def review_response(request, ticket_id):
-    """View to create a reveiw for an existing ticket
+    """Create a review for an existing ticket
 
     Args:
         ticket_id (int): ticket's id
@@ -106,24 +106,27 @@ def review_response(request, ticket_id):
 
 @login_required
 def create_new_review(request):
-    """View to create a ticket and a review in the same time
+    """Create a ticket and a review in the same time
 
     """
-    ticket_form = forms.TicketForm()
-    review_form = forms.ReviewForm()
+    ticket_form = forms.TicketForm(prefix='ticket')
+    review_form = forms.ReviewForm(prefix='review')
+
     if request.method == 'POST':
-        ticket_form = forms.TicketForm(request.POST, request.FILES)
-        review_form = forms.ReviewForm(request.POST)
-        if all([ticket_form.is_valid(), review_form.is_valid()]):
+        ticket_form = forms.TicketForm(request.POST, request.FILES,
+                                       prefix='ticket')
+        review_form = forms.ReviewForm(request.POST, prefix='review')
+
+        if ticket_form.is_valid() and review_form.is_valid():
             ticket = ticket_form.save(commit=False)
             ticket.user = request.user
             ticket.review_provided = True
             ticket.save()
+
             review = review_form.save(commit=False)
             review.ticket = ticket
             review.user = request.user
             review.save()
-            ticket.save()
             return redirect('home')
     context = {
         'ticket_form': ticket_form,

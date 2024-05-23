@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="container px-2 my-3">
+<div class="container px-2 my-3" aria-label="Create new review">
     <div class="row align-items-center">
         <div class="text-center">
         <h2 class="fw-bold ">Créer une critique</h2></div>
@@ -33,7 +33,6 @@
                     <div class="form-group">
                         <label for="id_body" class="col-sm-2 col-form-label">Commentaire</label>
                         {{ review_form.body }}
-                     
                     </div>
                     </div>
                     <div class="py-4 text-center">

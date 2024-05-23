@@ -31,7 +31,8 @@ class ReviewForm(forms.ModelForm):
         widgets = {
             'headline': forms.TextInput(attrs={'class': 'form-control',
                                                'label': 'Titre'}),
-            'body': forms.Textarea(attrs={'class': 'form-control'}),
+            'body': forms.Textarea(attrs={'class': 'form-control',
+                                          'label': 'Commentaire'}),
         }
 
 
@@ -57,8 +58,10 @@ class TicketForm(forms.ModelForm):
         labels = {'headline': 'Titre', 'body': 'Description', 'image': 'image'}
 
         widgets = {
-            'headline': forms.TextInput(attrs={'class': 'form-control'}),
-            'body': forms.Textarea(attrs={'class': 'form-control'}),
+            'headline': forms.TextInput(attrs={'class': 'form-control',
+                                               'label': 'Titre'}),
+            'body': forms.Textarea(attrs={'class': 'form-control', 
+                                          'label': 'Description'}),
         }
 
 

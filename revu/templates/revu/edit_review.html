@@ -1,7 +1,7 @@
 
 {% extends 'base.html' %}
 {% block content %}
-<div class="container px-2 my-3">
+<div class="container px-2 my-3" aria-label="edit review">
     <div class="border border-dark">
     <div class="row align-items-center ">
         <div class="text-center">
@@ -9,14 +9,7 @@
             <form method="post">
                 {{ edit_form.as_p }}
                 {% csrf_token %}
-                <button type="submit" class="btn btn-secondary">Sauvegarder</button>
-            </form>
-            <hr>
-            <h3>Supprimer la critique ?</h3>
-            <form method="post">
-                {{ delete_form }}
-                {% csrf_token %}
-                <button type="submit" class="btn btn-secondary">Supprimer</button>
+                <button type="submit" class="btn btn-secondary mb-2">Sauvegarder</button>
             </form>
         </div>
     </div>

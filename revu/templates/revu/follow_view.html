@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="container my-5">
+<div class="container my-5" aria-label="Follow Unfollow Form">
     <div class="border border-dark p-4">
     <div class="row align-items-center">
 
         <h3 class="m-2">Suivre d'autres utilisateurs</h2>
-        <div class="border border-dark p-2"  style="background-color: rgb(253, 250, 245);">
+        <div class="border border-dark p-2"  style="background-color: rgb(251, 251, 247);">
             <div class="row">
                 <div class="col-6">
             <form id="follow-users-form" method="post">
@@ -22,11 +22,11 @@
     </div>
     <div class="row">
         <h3 class="m-2">Abonnements</h3>
-        <div class="border border-dark p-2"  style="background-color: rgb(253, 250, 245);">
+        <div class="border border-dark p-2"  style="background-color: rgb(251, 255, 247);">
         <ul class="list-unstyled">
             {% if followings %}
                 {% for following in followings %}
-                    <li class="border border-dark p-2"> {{ following.followed_user.username}}
+                    <li class="border border-dark m-1 p-2"> {{ following.followed_user.username}}
                         <form action="{% url 'unfollow_user' following.followed_user.id %}" method="post" style="display:inline;" onsubmit="return confirm('Voulez vous vraiment arrêter de suivre cet utilisateur ?')">
                             {% csrf_token %}
                             <div class="text-end">
@@ -42,11 +42,11 @@
     </div>
     <div class="row">
         <h3 class="m-2">Abonnés</h3>
-        <div class="border border-dark p-2 "  style="background-color: rgb(253, 250, 245);">
+        <div class="border border-dark p-2 "  style="background-color: rgb(250, 245, 253);">
         <ul class="list-unstyled">
             {% if followers %}
                 {% for follower in followers %}
-                <li class="border border-dark p-2"> {{ follower.user.username}} </li>
+                <li class="border border-dark m-1 p-2"> {{ follower.user.username}} </li>
                 {% endfor %}
             {% else %}
                 <p>Vous n'avez aucun abonné</p>
@@ -54,7 +54,7 @@
         </ul>
     </div>
     </div>
-    <div class="text-end m-1 pt-1">
+    <div class="text-end m-2 pt-1">
         <a href="{% url 'block_view' %}" class="btn btn-secondary">Bloquer un utilisateur</a>
     </div>
 </div>

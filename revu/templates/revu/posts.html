@@ -1,28 +1,28 @@
 {% extends 'base.html' %}
 {% block content %}
-<section>
+<section aria-label="User's Posts">
     <div class="container mt-5">
    <h2 class="m-4">Vos Posts</h2>
    
-   <div class="row border border-dark">
+   <div class="row">
     <div class="container p-2">
    {% if page_obj %}
+    <div class=" border border-dark p-2">
          {% for p in page_obj %}
                 {% if p.content_type == "REVIEW" %}
-                    <div class="m-2 border border-dark">
                     {% include 'revu/partials/review_snippet.html' %}
-                    
                     <p class="text-end m-2"><a href="{% url 'edit_review' p.id %}" class="btn btn-secondary">Modifier</a><a href="{% url 'delete_review' p.id %}" class="btn btn-secondary offset-1">Supprimer</a> </p>
-                </div>
+                    <hr>
             {% else %}
-                <div class="m-2 border border-dark">
+                <div class="p-2">
                     {% include 'revu/partials/ticket_snippet.html' %}
-                
                 <p class="text-end m-2"><a href="{% url 'edit_ticket' p.id %}" class="btn btn-secondary ">Modifier</a><a href="{% url 'delete_ticket' p.id %}" class="btn btn-secondary offset-1">Supprimer</a></p>
-            </div>
+                </div>
+                <hr>
             {% endif %}
             
          {% endfor %}
+        </div>
          <span>
             {% if page_obj.has_previous %}
             <a href="?page=1" class="text-decoration-none" style="color: black;">&laquo; première</a>
@@ -37,7 +37,7 @@
             {% endif %}
         </span>
    {% else %}
-      <p>Aucun post trouvé.</p>
+      <p>Aucun post publié.</p>
    {% endif %}
    </div>
    </div>

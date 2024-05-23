@@ -1,5 +1,12 @@
 # LITRevu
 
+![Python](https://img.shields.io/badge/python-3.12.x-green.svg)
+![Django](https://img.shields.io/badge/django-5.0.4.x-green.svg)
+
+[![PEP8](https://img.shields.io/badge/code%20style-pep8-orange.svg)](https://www.python.org/dev/peps/pep-0008/)
+[![Flake8](https://img.shields.io/badge/flake8-checked-blueviolet)](https://flake8.pycqa.org/en/latest/)
+
+
 ## Description du projet:
   Le but de ce projet est de créer une application permettant à une communauté d'utilisateurs de consulter et/ou de demander des critiques littéraires.
   
@@ -15,12 +22,20 @@
  - de voir la liste des utilisateurs qu'il suit et qui le suivent.
  - de bloquer un utilisateurs et de voir la liste des utlisateurs bloqués.
     
-## Pré-requis:
+## Technologies:
    - Language de programmation:
       Python 3+
    - Module utilisé:
       - Django 5
    - Le fichier **requirements.txt** permet l'installation des modules nécessaires.
+
+## Author
+
+   Florian
+
+## Version
+
+   $1.0$
 
 ## Etapes d'installation:
 
