@@ -37,6 +37,7 @@
 
    $1.0$
 
+---
 ## Etapes d'installation:
 
 #### Installer Python
@@ -73,6 +74,7 @@ Une fois l'installation terminée, taper la commande suivante pour vous assurer 
 
     $ pip freeze
 
+---
 ## Utilisation:
    - Exécuter le programme en tapant "py manage.py" dans la console ou à l'aide d'un éditeur de code.
    - Dans le terminal, tapez: 
@@ -82,6 +84,7 @@ Une fois l'installation terminée, taper la commande suivante pour vous assurer 
       pour lancer le serveur local.
    - Dans votre navigateur, rendez vous à l' adresse:" http://127.0.0.1:8000/" pour acceder au site.
 
+---
 ## Administration du site par un développeur:
    - Créer un profil "superuser" dans le terminal:
       $ python manage.py createsuperuser

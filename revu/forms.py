@@ -20,7 +20,8 @@ class ReviewForm(forms.ModelForm):
     rating = forms.ChoiceField(choices=CHOICES,
                                label='Note',
                                widget=forms.RadioSelect(attrs={
-                                   'class': 'd-flex m-2 p-2'}))
+                                   'class': 'd-flex m-2 p-3 starability-basic'
+                                   }))
 
     class Meta:
 
