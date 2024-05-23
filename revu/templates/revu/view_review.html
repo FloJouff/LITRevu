@@ -1,0 +1,26 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<div class="container my-5 border border-dark" style="background-color: rgb(253, 250, 245);">
+    <div class="row m-5 text-center">
+        <h2>{{ review.headline }}</h2>
+        <p>{{ review.body }}</p>
+        <p>Note: {{ review.rating }}
+            <div class="rating">                                     
+                    {% for star in "12345" %}
+                        {% if forloop.counter <= review.rating  %}
+                            <span><i class="bi bi-star-fill"></i></span>
+                        {% else %}
+                            <span><i class="bi bi-star"></i></span>
+                        {% endif %}
+                    {% endfor %}
+            </div></p>
+        <div class="text-center">
+            <br>
+            <p><a href="{% url 'edit_review' review.id %}" class="btn btn-secondary">Modifier la critique</a>
+            <a href="{% url 'login' %}" class="btn btn-secondary offset-1">Retour</a></p>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

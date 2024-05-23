@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container px-2 my-3" aria-label="Write a Review in response to a Ticket">
+    <div class="row align-items-center">
+        <div class="text-center">
+        <h2 class="fw-bold ">Créer une critique</h2></div>
+            <div class="container m-2 border border-dark p-4"  style="background-color: rgb(253, 250, 245);">
+                <div class="container m-1 border border-dark pb-4">
+                    <h3 class="p-2">Vous êtes en train de poster en réponse à: </h3>
+                    <div class="text-center">
+                        <div class="row">
+                        <div class="col-2"></div>
+                        <div class="col-8 container m-2 border border-dark p-4"> 
+                            <div class="row">
+                                <div class="col text-start">
+                                    <p>{{ ticket.user }} a demandé une critique</p></div>
+                                    <div class="col text-end">
+                                        <p> {{ ticket.time_created }}</p></div>
+                            <h6 class="text-start">Titre : {{ ticket.headline }} </h6>
+                            <p class="text-start offset-1"> {{ ticket.body }} </p>
+                            {% if ticket.image %}
+                                <img src="{{ticket.image.url }}" alt="Image du ticket" class="img-fluid" style="max-width: 200px; height: auto;">
+                            {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-2"></div>
+                    </div>
+                    </div>
+                </div>    
+            <hr>
+            <div class="container m-2 border border-dark p-4">
+                <h3 class="m-3 ">Critique</h3>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                                {{ review_form.as_p }}
+                        </div>
+                        <div class="py-4 text-center">
+                        <button type="submit" class="btn btn-secondary col-12 h-100">Poster</button></div>
+                    </form> 
+                </div>
+            </div> 
+        </div>          
+    </div>
+</div>
+{% endblock content %}

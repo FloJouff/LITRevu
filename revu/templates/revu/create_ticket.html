@@ -1,15 +1,20 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="container my-5">
+<div class="container my-5" aria-label="Create a ticket">
     <div class="row align-items-center">
-        <h2>Créer un ticket</h2>
-            <form method="post">
-                {{form.as_p}}
+        <div class="text-center">
+        <h2>Créer un ticket</h2></div>
+        <div class="border border-dark pb-4"  style="background-color: rgb(253, 250, 245);">
+            <form method="post" enctype="multipart/form-data">
+                {{ ticket_form.as_p}}
                 {% csrf_token %}
                 <div class="align-items-center">
-                <button type="submit" class="btn-secondary">Envoyer</button> 
-            </div>
-            </form>            
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-secondary">Envoyer</button>
+                        <a href="{% url 'login' %}" class="btn btn-secondary offset-1">Retour</a></div>
+                </div>
+            </form>   
+        </div>         
     </div>
 </div>
 {% endblock content %}

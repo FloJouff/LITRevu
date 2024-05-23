@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container vh-100 px-2 my-3">
+    <div class="border border-dark h-50">
+    <div class="row align-items-center ">
+        <div class="text-center m-5">
+            <h3>Vous n'avez pas les droits pour modifier ou supprimer ce post</h3>
+            <div class="text-center mt-5">
+                <p><a href="{% url 'home' %}" class="btn btn-secondary ">Retourner à l'accueil</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock content %}

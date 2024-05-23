@@ -1,19 +1,3 @@
-"""
-URL configuration for litrevu project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.0/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
@@ -40,9 +24,36 @@ urlpatterns = [
          ),
     path('home/', revu.views.home, name='home'),
     path('signup/', authentication.views.signup_page, name='signup'),
-    path('revu/create_review', revu.views.review_upload, name='create_review'),
-    path('contact', revu.views.contact, name='contact')
+    path('revu/review_response/<int:ticket_id>/',
+         revu.views.review_response, name='review_response'),
+    path('revu/create_new_review/',
+         revu.views.create_new_review, name='create_new_review'),
+    path('revu/<int:review_id>/',
+         revu.views.view_review, name='view_review'),
+    path('revu/<int:review_id>/edit/',
+         revu.views.edit_review, name="edit_review"),
+    path('revu/delete-review/<int:review_id>/',
+         revu.views.delete_review, name='delete_review'),
+    path('revu/create_ticket/',
+         revu.views.create_ticket, name='create_ticket'),
+    path('revu/ticket/<int:ticket_id>/',
+         revu.views.view_ticket, name='view_ticket'),
+    path('revu/ticket/<int:ticket_id>/edit/',
+         revu.views.edit_ticket, name='edit_ticket'),
+    path('revu/delete-ticket/<int:ticket_id>/',
+         revu.views.delete_ticket, name='delete_ticket'),
+    path('contact/', revu.views.contact, name='contact'),
+    path('no_permission', revu.views.no_permission, name='no_permission'),
+    path('revu/posts/', revu.views.user_posts, name='user_posts'),
+    path('revu/follow/', revu.views.follow_users, name='follow'),
+    path('revu/unfollow/<int:user_id>/', revu.views.unfollow_user,
+         name='unfollow_user'),
+    path('revu/block/', revu.views.block_user,
+         name='block_view'),
+    path('revu/unblock/<int:user_id>/', revu.views.unblock_user,
+         name='unblock_user'),
 ]
 
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)

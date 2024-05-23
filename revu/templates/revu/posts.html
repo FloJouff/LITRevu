@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block content %}
+<section aria-label="User's Posts">
+    <div class="container mt-5">
+   <h2 class="m-4">Vos Posts</h2>
+   
+   <div class="row">
+    <div class="container p-2">
+   {% if page_obj %}
+    <div class=" border border-dark p-2">
+         {% for p in page_obj %}
+                {% if p.content_type == "REVIEW" %}
+                    {% include 'revu/partials/review_snippet.html' %}
+                    <p class="text-end m-2"><a href="{% url 'edit_review' p.id %}" class="btn btn-secondary">Modifier</a><a href="{% url 'delete_review' p.id %}" class="btn btn-secondary offset-1">Supprimer</a> </p>
+                    <hr>
+            {% else %}
+                <div class="p-2">
+                    {% include 'revu/partials/ticket_snippet.html' %}
+                <p class="text-end m-2"><a href="{% url 'edit_ticket' p.id %}" class="btn btn-secondary ">Modifier</a><a href="{% url 'delete_ticket' p.id %}" class="btn btn-secondary offset-1">Supprimer</a></p>
+                </div>
+                <hr>
+            {% endif %}
+            
+         {% endfor %}
+        </div>
+         <span>
+            {% if page_obj.has_previous %}
+            <a href="?page=1" class="text-decoration-none" style="color: black;">&laquo; première</a>
+            <a href="?page={{ page_obj.previous_page_number }}" class="text-decoration-none" style="color: black;">précédente</a>
+            {% endif %}
+            <span>
+                Page {{ page_obj.number }} sur {{ page_obj.paginator.num_pages }}.
+            </span>
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}" class="text-decoration-none" style="color: black;">suivante</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}" class="text-decoration-none" style="color: black;">dernière &raquo;</a>
+            {% endif %}
+        </span>
+   {% else %}
+      <p>Aucun post publié.</p>
+   {% endif %}
+   </div>
+   </div>
+</div>
+</section>
+{% endblock content %}

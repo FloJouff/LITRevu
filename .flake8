@@ -1,0 +1,6 @@
+[flake8]
+max-line-lenght = 99
+exclude =
+    migrations, 
+    .env,
+    __pycache__
