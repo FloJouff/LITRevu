@@ -279,6 +279,7 @@ def delete_ticket(request, ticket_id):
     return redirect('user_posts')
 
 
+@login_required
 def follow_users(request):
     """Follow new user, see who follows who
 
@@ -303,6 +304,7 @@ def follow_users(request):
     return render(request, 'revu/follow_view.html', context=context)
 
 
+@login_required
 def unfollow_user(request, user_id):
     """unfollow a user
 
@@ -321,6 +323,7 @@ def unfollow_user(request, user_id):
     return redirect('follow')
 
 
+@login_required
 def block_user(request):
     """Block a user, see who user is blocking
 
@@ -349,6 +352,7 @@ def block_user(request):
     return render(request, 'revu/block_view.html', context=context)
 
 
+@login_required
 def unblock_user(request, user_id):
     """unblock a user
 

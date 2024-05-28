@@ -43,7 +43,7 @@
 
     <body>
       <header>
-        <nav class="navbar navbar-expand-md navbar-light fixed-top"  style="background-color: rgb(189, 215, 245);">
+        <nav class="navbar navbar-expand-md navbar-light fixed-top"  style="background-color: rgb(189, 215, 245,0.8);">
           <div class="container">
           <a class="navbar-brand text-uppercase fw-bold" href="{% url 'login' %}" aria-label="LITRevu"><span class="bg-secondary bg-gradient p-1 rounded-3 text-light">LIT</span> Revu</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expended="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon">
@@ -64,7 +64,7 @@
                 {% if user.is_authenticated %}
                   <form action="{% url 'logout'%}" method="post" class="col-12">
                     {% csrf_token %}
-                     <button type="submit" class="btn btn-light">Se Déconnecter</button>
+                     <button type="submit" class="btn btn-secondary">Se Déconnecter</button>
                   </form>
                 {% endif %}
             </li>
@@ -76,12 +76,12 @@
       <div class="md-vh-100 d-flex">
         <section class="w-100" aria-label="Accueil">
             <div class="container-fluid mt-5 h-100">
-              <div class="row h-100">
-                <div class="col-md-2 sidebar mt-2" style="background-color: rgb(189, 215, 245);">
+              <div class="row h-100 ">
+                <div class="col-md-2 sidebar mt-2 " style="width: auto">
                   {% if user.is_authenticated %}
-                      <p>Bienvenu, {{ user }} !</p>
-                      <p><a href="{% url 'home' %}" class="btn btn-light">Accueil</a></p>
-                      <p><a href="{% url 'password_change' %}" class="btn btn-light">Changer le mot de passe</a></p>
+                      <h3 class="m-2 pt-2">Bienvenu, {{ user }} !</h3>
+                      <p><a href="{% url 'home' %}" class="btn btn-secondary">Accueil</a></p>
+                      <p><a href="{% url 'password_change' %}" class="btn btn-secondary">Changer le mot de passe</a></p>
                   {% endif %}
                   </div>
                   <div class="col-md-10 mb-5">
@@ -93,7 +93,7 @@
       </div>
     </body>
   
-    <footer style="background-color: rgb(189, 215, 245);">
+    <footer style="background-color: rgb(189, 215, 245, 0.7);">
         <div class="container py-1" >
             <div class="row gy-4 align-items-center" aria-label="footer navigation">
               <div class="col-12 col-md-4">
